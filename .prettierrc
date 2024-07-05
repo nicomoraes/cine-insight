@@ -1,0 +1,21 @@
+{
+  "bracketSpacing": true,
+  "endOfLine": "auto",
+  "jsxSingleQuote": true,
+  "printWidth": 90,
+  "semi": true,
+  "singleQuote": true,
+  "tabWidth": 2,
+  "importOrder": [
+    "^(.*\\.css$)",
+    "^(react/(.*)$)|^(react-dom/(.*)$)|^(react$)|^(react-dom$)",
+    "^(next/(.*)$)|^(next$)",
+    "<THIRD_PARTY_MODULES>",
+    "^@/lib/(.*)$",
+    "^@/components/(.*)$",
+    "^[./]"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
+  "plugins": ["@trivago/prettier-plugin-sort-imports", "prettier-plugin-tailwindcss"]
+}
