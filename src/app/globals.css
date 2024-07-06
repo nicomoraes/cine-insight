@@ -2,28 +2,45 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    /* vanilla shadcn/ui vars */
+    --accent-foreground: 253 13% 74%;
+    --accent: 253 13% 14%;
+    --background: 253 43% 3%;
+    --border: 215 27.9% 16.9%;
+    --card-foreground: 253 31% 99%;
+    --card: 253 43% 4%;
+    --foreground: 253 31% 98%;
+    --input: 215 27.9% 16.9%;
+    --muted-foreground: 253 13% 63%;
+    --muted: 253 7% 13%;
+    --popover-foreground: 253 31% 98%;
+    --popover: 253 43% 3%;
+    --primary-foreground: 253 91% 98%;
+    --primary: 253 91% 58%;
+    --radius: 0.75rem;
+    --ring: 253 91% 58%;
+    --secondary-foreground: 253 7% 69%;
+    --secondary: 253 7% 9%;
+
+    /* extra vars */
+    --destructive-foreground: 14 94% 66%;
+    --destructive: 14 94% 6%;
+    --info-foreground: 220 47% 71%;
+    --info: 220 47% 11%;
+    --success-foreground: 159 47% 51%;
+    --success: 159 47% 11%;
+    --warning-foreground: 55 47% 51%;
+    --warning: 55 47% 11%;
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(to bottom, transparent, rgb(var(--background-end-rgb)))
-    rgb(var(--background-start-rgb));
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background font-sans text-foreground;
   }
 }
