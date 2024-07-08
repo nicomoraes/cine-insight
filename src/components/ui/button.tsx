@@ -18,12 +18,12 @@ const buttonVariants = cva(
         secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
 
         destructive:
-          'bg-destructive text-destructive-foreground hover:bg-destructive/90 border border-destructive-foreground/10',
-        info: 'bg-info text-info-foreground hover:bg-info/90 border border-info-foreground/10',
+          'bg-destructive text-destructive-foreground hover:bg-destructive/80 border border-destructive-foreground/10',
+        info: 'bg-info text-info-foreground hover:bg-info/80 border border-info-foreground/10',
         success:
-          'bg-success text-success-foreground hover:bg-success/90 border border-success-foreground/10',
+          'bg-success text-success-foreground hover:bg-success/80 border border-success-foreground/10',
         warning:
-          'bg-warning text-warning-foreground hover:bg-warning/90 border border-warning-foreground/10',
+          'bg-warning text-warning-foreground hover:bg-warning/80 border border-warning-foreground/10',
       },
       size: {
         default: 'h-10 px-4 py-2',

@@ -11,6 +11,9 @@
     "^(react/(.*)$)|^(react-dom/(.*)$)|^(react$)|^(react-dom$)",
     "^(next/(.*)$)|^(next$)",
     "<THIRD_PARTY_MODULES>",
+    "^@/types/(.*)$",
+    "^@/constants/(.*)$",
+    "^@/data/(.*)$",
     "^@/lib/(.*)$",
     "^@/components/(.*)$",
     "^[./]"

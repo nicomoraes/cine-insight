@@ -1,23 +1,27 @@
-import { MagnifyingGlass } from '@phosphor-icons/react/dist/ssr';
+import { SearchBar } from '@/components/home/SearchBar';
+import { SearchGrid } from '@/components/home/SearchGrid';
+import { TrendingGrid } from '@/components/home/TrendingGrid';
+import { TrendingCardError } from '@/components/home/TrendingGridError';
 
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+type HomeParams = {
+  searchParams: Record<string, string>;
+};
 
-export default function Home() {
+export default async function Home({ searchParams: { q } }: HomeParams) {
   return (
-    <main className='min-h-svh w-full px-10 pt-24'>
-      <div className='col mx-auto flex max-w-xl flex-col gap-2'>
-        <h1 className='text-center text-4xl font-bold'>Next Movies</h1>
-        <p className='text-center text-2xl'>
-          Encontre informações completas de filmes e séries
-        </p>
-        <div className='mx-auto flex w-full max-w-md gap-2'>
-          <Input placeholder='Digite o nome do Filme ou Série que deseja encontrar' />
-          <Button aria-label='Pesquisar'>
-            <MagnifyingGlass size={24} />
-          </Button>
-        </div>
+    <main className='flex min-h-svh w-full flex-col gap-4 px-10 py-10'>
+      <div className='col mx-auto flex w-full max-w-xl flex-col gap-2'>
+        <SearchBar />
       </div>
+      <section className='mx-auto flex w-full max-w-6xl flex-col gap-2'>
+        {q ? (
+          <SearchGrid q={q} />
+        ) : (
+          <TrendingCardError>
+            <TrendingGrid />
+          </TrendingCardError>
+        )}
+      </section>
     </main>
   );
 }

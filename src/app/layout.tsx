@@ -4,6 +4,8 @@ import type { Metadata } from 'next';
 
 import { satoshi } from '@/lib/fonts';
 
+import { Providers } from '@/components/Providers';
+
 export const metadata: Metadata = {
   title: 'Next Movies',
   description: 'Encontre todas as informções de filmes e séries',
@@ -16,7 +18,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='pt-BR'>
-      <body className={`${satoshi.variable}`}>{children}</body>
+      <body className={`${satoshi.variable}`}>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }
