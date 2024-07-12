@@ -87,6 +87,9 @@ const config = {
       fontFamily: {
         sans: ['var(--font-satoshi)'],
       },
+      screens: {
+        xs: '500px',
+      },
     },
   },
   plugins: [require('tailwindcss-animate'), require('tailwindcss-multi')],

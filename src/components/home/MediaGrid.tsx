@@ -1,5 +1,7 @@
 import { ReactNode } from 'react';
 
+import Link from 'next/link';
+
 import { FilmSlate, Television } from '@phosphor-icons/react/dist/ssr';
 
 import { generateRandonKey } from '@/lib/generators';
@@ -20,30 +22,34 @@ export function MediaGrid({ children }: MediaGridProps) {
 }
 
 type MediaGridCardProps = {
+  mediaId: number;
   mediaTitle: string | undefined;
   mediaPoster: string | undefined;
   mediaType: 'movie' | 'tv';
 };
 
 export function MediaGridCard({
+  mediaId,
   mediaPoster,
   mediaTitle,
   mediaType,
 }: MediaGridCardProps) {
   return (
-    <div className='relative col-span-1 aspect-[2/3] w-full overflow-hidden rounded-md outline outline-[4px] outline-offset-2 outline-transparent transition-all duration-150 hover:multi-[outline-primary;cursor-pointer;scale-105]'>
-      <Image
-        src={`${process.env.NEXT_PUBLIC_TMDB_API_BASE_IMAGE_URL}/w500/${mediaPoster}`}
-        fallback='/img/2x3_image_fallback.png'
-        alt={mediaTitle || 'Mídia'}
-        className='aspect-[2/3] w-full object-cover'
-        height={500}
-        width={500}
-      />
-      <span className='absolute right-0 top-4 rounded-l-md rounded-r-none bg-secondary p-2 text-sm tracking-wide text-secondary-foreground shadow-lg'>
-        {mediaType === 'movie' ? <FilmSlate size={24} /> : <Television size={24} />}
-      </span>
-    </div>
+    <Link href={`/${mediaType === 'movie' ? 'filme' : 'serie'}/${mediaId}`}>
+      <div className='relative col-span-1 aspect-[2/3] w-full overflow-hidden rounded-md outline outline-[4px] outline-offset-2 outline-transparent transition-all duration-150 hover:multi-[outline-primary;cursor-pointer;scale-105]'>
+        <Image
+          src={`${process.env.NEXT_PUBLIC_TMDB_API_BASE_IMAGE_URL}/w500/${mediaPoster}`}
+          fallback='/img/2x3_image_fallback.png'
+          alt={mediaTitle || 'Mídia'}
+          className='aspect-[2/3] w-full object-cover'
+          height={500}
+          width={500}
+        />
+        <span className='absolute right-0 top-4 rounded-l-md rounded-r-none bg-secondary p-2 text-sm tracking-wide text-secondary-foreground shadow-lg'>
+          {mediaType === 'movie' ? <FilmSlate size={24} /> : <Television size={24} />}
+        </span>
+      </div>
+    </Link>
   );
 }
 

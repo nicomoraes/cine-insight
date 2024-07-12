@@ -20,6 +20,7 @@ export async function TrendingGrid() {
         {trendingMedia.results.map((media) => (
           <MediaGridCard
             key={generateRandonKey({})}
+            mediaId={media.id}
             mediaPoster={media.poster_path}
             mediaTitle={media.title}
             mediaType={media.media_type}

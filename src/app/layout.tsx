@@ -5,6 +5,7 @@ import type { Metadata } from 'next';
 import { satoshi } from '@/lib/fonts';
 
 import { Providers } from '@/components/Providers';
+import { TailwindIndicator } from '@/components/common/TailwindIndicator';
 
 export const metadata: Metadata = {
   title: 'Next Movies',
@@ -13,13 +14,19 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  modal,
 }: Readonly<{
   children: React.ReactNode;
+  modal: React.ReactNode;
 }>) {
   return (
     <html lang='pt-BR'>
       <body className={`${satoshi.variable}`}>
-        <Providers>{children}</Providers>
+        <Providers>
+          {modal}
+          {children}
+          <TailwindIndicator />
+        </Providers>
       </body>
     </html>
   );

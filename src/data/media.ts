@@ -1,3 +1,4 @@
+import { CollectionRoot } from '@/types/collection';
 import { MultiSearchResult, SearchRoot } from '@/types/search';
 import { TrendingRoot } from '@/types/trending';
 
@@ -31,4 +32,11 @@ export async function getSearch({ pageParam = 1, query }: GetSearchOptions) {
     { method: 'GET' },
   );
   return data;
+}
+
+export async function getCollectionById(id: number) {
+  const url = new URL(`${process.env.NEXT_PUBLIC_TMDB_API_BASE_URL}/collection/${id})`);
+  url.searchParams.append('language', 'pt-BR');
+  const data = await fetcher<CollectionRoot>(url.toString(), TMDB_DEFAULT_FETCH_CONFIG);
+  return data.parts;
 }

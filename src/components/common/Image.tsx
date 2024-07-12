@@ -5,7 +5,10 @@ import { useState } from 'react';
 import NextImage, { ImageProps as NextImageProps } from 'next/image';
 
 interface ImageProps extends NextImageProps {
-  fallback: string;
+  fallback:
+    | '/img/1x1_image_fallback.png'
+    | '/img/2x3_image_fallback.png'
+    | '/img/16x9_image_fallback.png';
 }
 
 export default function Image({ alt, fallback, src, ...props }: ImageProps) {

@@ -5,24 +5,24 @@
 @layer base {
   :root {
     /* vanilla shadcn/ui vars */
-    --accent-foreground: 253 13% 74%;
-    --accent: 253 13% 14%;
-    --background: 253 43% 3%;
-    --border: 215 27.9% 16.9%;
-    --card-foreground: 253 31% 99%;
-    --card: 253 43% 4%;
-    --foreground: 253 31% 98%;
-    --input: 215 27.9% 16.9%;
-    --muted-foreground: 253 13% 63%;
-    --muted: 253 7% 13%;
-    --popover-foreground: 253 31% 98%;
-    --popover: 253 43% 3%;
-    --primary-foreground: 253 91% 98%;
-    --primary: 253 91% 58%;
+    --accent-foreground: 0 0% 98%;
+    --accent: 240 3.7% 15.9%;
+    --background: 240 10% 3.9%;
+    --border: 240 3.7% 15.9%;
+    --card-foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --input: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --muted: 240 3.7% 15.9%;
+    --popover-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --primary-foreground: 240 5.9% 10%;
+    --primary: 0 0% 98%;
     --radius: 0.75rem;
-    --ring: 253 91% 58%;
-    --secondary-foreground: 253 7% 69%;
-    --secondary: 253 7% 9%;
+    --ring: 240 4.9% 83.9%;
+    --secondary-foreground: 0 0% 98%;
+    --secondary: 240 3.7% 15.9%;
 
     /* extra vars */
     --destructive-foreground: 14 94% 66%;
@@ -42,5 +42,20 @@
   }
   body {
     @apply bg-background font-sans text-foreground;
+  }
+}
+
+@layer utilities {
+  .mask1 {
+    -webkit-mask-image: linear-gradient(
+      to top,
+      transparent 25%,
+      theme('colors.background') 75%
+    );
+    mask-image: linear-gradient(to top, transparent 25%, theme('colors.background') 75%);
+  }
+
+  .certification_text-shadow {
+    text-shadow: 1px 1px theme('colors.background');
   }
 }
