@@ -19,9 +19,10 @@ export async function GET(req: NextRequest) {
   url.searchParams.append('page', String(page));
   url.searchParams.append('query', q);
 
-  const data = await fetcher<SearchRoot<MultiSearchResult>>(url.toString(), {
-    ...TMDB_DEFAULT_FETCH_CONFIG,
-  });
+  const data = await fetcher<SearchRoot<MultiSearchResult>>(
+    url.toString(),
+    TMDB_DEFAULT_FETCH_CONFIG,
+  );
 
   const nextPage = getNextPage({ page: data.page, total_pages: data.total_pages });
 

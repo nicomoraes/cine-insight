@@ -28,7 +28,7 @@ export function CastAndCrewCarousel({ persons, title }: CastAndCrewCarouselProps
           {persons.map((p) => (
             <CarouselItem
               key={generateRandonKey({})}
-              className='basis-1/3 sm:basis-1/4 md:basis-1/5 lg:basis-1/6'
+              className='basis-1/3 sm:basis-1/4 md:basis-1/5 lg:basis-[10%]'
             >
               <div className='p-1'>
                 <div className='flex flex-col'>
@@ -43,7 +43,9 @@ export function CastAndCrewCarousel({ persons, title }: CastAndCrewCarouselProps
                   />
                   <div className='flex flex-col pt-1'>
                     <span className='text-sm font-medium'>{p.name}</span>
-                    <span className='text-wrap text-xs text-foreground/80'>{p.role}</span>
+                    <span className='line-clamp-3 text-wrap text-xs text-foreground/80'>
+                      {p.role}
+                    </span>
                   </div>
                 </div>
               </div>

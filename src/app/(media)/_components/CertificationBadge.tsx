@@ -5,7 +5,7 @@ import { type VariantProps, cva } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 
 const certificationBadgeVariants = cva(
-  'inline-flex items-center rounded-md font-medium aspect-square leading-4 certification_text-shadow',
+  'inline-flex items-center rounded-md font-medium aspect-square leading-4 certification_text-shadow tracking-wide',
   {
     variants: {
       variant: {

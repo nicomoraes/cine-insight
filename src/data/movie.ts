@@ -1,5 +1,5 @@
-import { AppendedCredits, AppendedReleases } from '@/types/appended';
 import { MovieRoot } from '@/types/movie';
+import { AppendedCredits, AppendedReleases } from '@/types/movie-append';
 import { WatchProviderRoot } from '@/types/watch-provider';
 
 import { TMDB_DEFAULT_FETCH_CONFIG } from '@/constants/fetch';

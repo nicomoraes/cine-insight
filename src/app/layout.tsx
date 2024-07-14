@@ -14,16 +14,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-  modal,
-}: Readonly<{
-  children: React.ReactNode;
-  modal: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang='pt-BR'>
       <body className={`${satoshi.variable}`}>
         <Providers>
-          {modal}
           {children}
           <TailwindIndicator />
         </Providers>

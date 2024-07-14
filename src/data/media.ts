@@ -28,7 +28,7 @@ type GetSearchOptions = {
 
 export async function getSearch({ pageParam = 1, query }: GetSearchOptions) {
   const data = await fetcher<SearchRoot<MultiSearchResult> & { nextPage: number }>(
-    `/api/media/search?page=${pageParam}&q=${query}`,
+    `/api/search?page=${pageParam}&q=${query}`,
     { method: 'GET' },
   );
   return data;

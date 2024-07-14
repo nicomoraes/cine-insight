@@ -35,7 +35,7 @@ export function MediaGridCard({
   mediaType,
 }: MediaGridCardProps) {
   return (
-    <Link href={`/${mediaType === 'movie' ? 'filme' : 'serie'}/${mediaId}`}>
+    <Link href={`/${mediaType === 'movie' ? 'filmes' : 'series'}/${mediaId}`}>
       <div className='relative col-span-1 aspect-[2/3] w-full overflow-hidden rounded-md outline outline-[4px] outline-offset-2 outline-transparent transition-all duration-150 hover:multi-[outline-primary;cursor-pointer;scale-105]'>
         <Image
           src={`${process.env.NEXT_PUBLIC_TMDB_API_BASE_IMAGE_URL}/w500/${mediaPoster}`}

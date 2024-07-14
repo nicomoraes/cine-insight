@@ -1,26 +1,48 @@
-import { getFullYear } from '@/lib/formatters';
-import { getHoursByMinutes } from '@/lib/getters';
+import { ComponentProps } from 'react';
+
+import { getFullYear, getPtBrReleaseDate } from '@/lib/formatters';
+import { getRuntimeString } from '@/lib/getters';
 
 import StarRating from './StarRating';
 
-type RatingProps = {
-  voteAverage?: number;
-};
-
-export function Rating({ voteAverage }: RatingProps) {
-  if (voteAverage === undefined || voteAverage === null)
-    return <span className='text-lg'>Sem dados de avalição</span>;
+type RatingProps = { voteAverage: number | null; voteCount: number };
+export function Rating({ voteAverage, voteCount }: RatingProps) {
+  if (voteAverage === undefined || voteAverage === null || voteCount === 0)
+    return <span className='text-yellow-400/50'>Não avaliado</span>;
   return <StarRating voteAverage={voteAverage} />;
 }
 
-type ReleaseYearProps = { releaseDate?: string };
-export function ReleaseYear({ releaseDate }: ReleaseYearProps) {
-  if (!releaseDate) return <span className='text-lg'>-</span>;
-  return <span className='text-lg'>{getFullYear(releaseDate)}</span>;
+interface ReleaseYearProps extends ComponentProps<'span'> {
+  releaseDate: string | null;
+}
+export function ReleaseYear({ releaseDate, ...props }: ReleaseYearProps) {
+  return <span {...props}>{releaseDate ? getFullYear(releaseDate) : '-'}</span>;
 }
 
-type RuntimeProps = { runtime?: number };
-export function Runtime({ runtime }: RuntimeProps) {
+interface ReleaseDateProps extends ComponentProps<'span'> {
+  releaseDate: string | null;
+}
+export function ReleaseDate({ releaseDate, ...props }: ReleaseDateProps) {
+  return <span {...props}>{releaseDate ? getPtBrReleaseDate(releaseDate) : '-'}</span>;
+}
+
+interface RuntimeProps extends ComponentProps<'span'> {
+  runtime: number | null;
+}
+export function Runtime({ runtime, ...props }: RuntimeProps) {
   if (!runtime) return <span className='text-lg'>-</span>;
-  return <span className='text-lg'>{getHoursByMinutes(runtime)}</span>;
+  return <span {...props}>{runtime ? getRuntimeString(runtime) : '-'}</span>;
+}
+
+interface NumberOfSeasonsProps extends ComponentProps<'span'> {
+  numberOfSeasons: number | null;
+}
+export function NumberOfSeasons({ numberOfSeasons, ...props }: NumberOfSeasonsProps) {
+  return (
+    <span {...props}>
+      {numberOfSeasons
+        ? `${numberOfSeasons} ${numberOfSeasons > 1 ? 'temporadas' : 'temporada'}`
+        : '-'}
+    </span>
+  );
 }

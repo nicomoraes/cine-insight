@@ -4,9 +4,9 @@ import { getCollectionById } from '@/data/media';
 import { getOneMovieById } from '@/data/movie';
 
 import {
-  getBrazilCertification,
   getDirectorsFromAppendedCredits,
-  getPersonsFromAppendedCredits,
+  getMovieBrazilCertification,
+  getMoviePersonsFromAppendedCredits,
 } from '@/lib/getters';
 
 import Image from '@/components/common/Image';
@@ -17,16 +17,16 @@ import CollectionCarousel from '../../_components/CollectionCarousel';
 import { Rating, ReleaseYear, Runtime } from '../../_components/MediaDetails';
 import { WatchProviders } from '../../_components/WatchProviders';
 
-type MovieModalPageParams = {
+type MoviePageParams = {
   params: { id: string };
 };
 
-export default async function MovieModalPage({ params }: MovieModalPageParams) {
+export default async function MoviePage({ params }: MoviePageParams) {
   if (!params.id) redirect('/');
 
   const { data, watchProviders } = await getOneMovieById(Number(params.id));
 
-  const { cast, crew } = getPersonsFromAppendedCredits(data.credits);
+  const { cast, crew } = getMoviePersonsFromAppendedCredits(data.credits);
   return (
     <>
       <Image
@@ -52,7 +52,7 @@ export default async function MovieModalPage({ params }: MovieModalPageParams) {
           <Rating voteAverage={data.vote_average} />
           <ReleaseYear releaseDate={data.release_date} />
           <Runtime runtime={data.runtime} />
-          <CertificationBadge variant={getBrazilCertification(data.releases)} />
+          <CertificationBadge variant={getMovieBrazilCertification(data.releases)} />
         </div>
         {getDirectorsFromAppendedCredits(data.credits).length != 0 && (
           <p>

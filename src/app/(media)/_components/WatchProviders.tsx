@@ -34,7 +34,7 @@ export function WatchProviders({ providers }: WatchProvidersProps) {
                 width={80}
                 height={80}
                 src={`${process.env.NEXT_PUBLIC_TMDB_API_BASE_IMAGE_URL}/w185/${p.logo_path}`}
-                className='aspect-square w-[34px] rounded-md object-cover'
+                className='aspect-square w-[34px] rounded-md object-cover sm:w-[40px]'
                 unoptimized
               />
             </HoverCardTrigger>

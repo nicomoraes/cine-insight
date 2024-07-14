@@ -9,6 +9,10 @@ export function getFullYear(dateAsString: string) {
   return new Date(dateAsString).getFullYear();
 }
 
+export function getPtBrReleaseDate(dateAsString: string) {
+  return new Intl.DateTimeFormat('pt-BR').format(new Date(dateAsString));
+}
+
 export function formatToStarRating(note: number) {
   const convertedNote = note / 2;
   const roundedNote = Math.round(convertedNote * 2) / 2;

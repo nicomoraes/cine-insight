@@ -70,7 +70,7 @@ export async function MediaCard({
   mediaType,
 }: MediaCardProps) {
   return (
-    <Link href={`/${mediaType === 'movie' ? 'filme' : 'serie'}/${mediaId}`}>
+    <Link href={`/${mediaType === 'movie' ? 'filmes' : 'series'}/${mediaId}`}>
       <Card>
         <CardContent className='relative flex aspect-[2/3] flex-col items-center justify-center overflow-hidden rounded-md outline outline-[4px] outline-offset-2 outline-transparent transition-all duration-150 hover:multi-[outline-primary;cursor-pointer]'>
           <Image
