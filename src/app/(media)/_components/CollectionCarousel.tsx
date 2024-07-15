@@ -103,7 +103,9 @@ export function MediaCarouselSkeleton() {
                 key={generateRandonKey({})}
                 className='basis-1/2 xs:basis-1/3 md:basis-1/4 lg:basis-1/5'
               >
-                <Skeleton className='aspect-[3/4] h-full w-full flex-1' />
+                <div className='p-1'>
+                  <Skeleton className='aspect-[3/4] h-full w-full flex-1' />
+                </div>
               </CarouselItem>
             ))}
         </CarouselContent>

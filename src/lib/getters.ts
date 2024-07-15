@@ -50,21 +50,17 @@ export function getDirectorsFromAppendedCredits(credits: MovieAppendedCredits) {
 }
 
 export function getMoviePersonsFromAppendedCredits(credits: MovieAppendedCredits) {
-  const crew = credits.crew
-    .sort((a, b) => b.popularity - a.popularity)
-    .map((cw) => ({
-      name: cw.name,
-      role: cw.job,
-      imageUrl: cw.profile_path,
-    }));
+  const crew = credits.crew.map((cw) => ({
+    name: cw.name,
+    role: cw.job,
+    imageUrl: cw.profile_path,
+  }));
 
-  const cast = credits.cast
-    .sort((a, b) => b.popularity - a.popularity)
-    .map((ct) => ({
-      name: ct.name,
-      role: ct.character,
-      imageUrl: ct.profile_path,
-    }));
+  const cast = credits.cast.map((ct) => ({
+    name: ct.name,
+    role: ct.character,
+    imageUrl: ct.profile_path,
+  }));
 
   return { cast, crew };
 }

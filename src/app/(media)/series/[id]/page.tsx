@@ -37,7 +37,7 @@ export default async function TvShowPage({ params }: TvShowPageParams) {
         className='mask1 -z-10 aspect-[2/3] max-h-svh object-cover brightness-50 xs:hidden'
         fill
       />
-      <div className='flex flex-col gap-4 px-4 pt-20 sm:px-10 md:px-20'>
+      <section className='flex flex-col gap-4 px-4 pt-20 sm:px-10 md:px-20'>
         <WatchProviders providers={watchProviders} />
         <h1 className='text-xl font-bold tracking-wide xs:text-2xl md:text-4xl lg:text-5xl'>
           {data.name || data.original_name}
@@ -61,15 +61,15 @@ export default async function TvShowPage({ params }: TvShowPageParams) {
             {data.overview}
           </p>
         )}
-      </div>
-      <div className='space-y-4 px-4 pb-6 pt-10 sm:px-20'>
+      </section>
+      <section className='space-y-4 px-4 pb-6 pt-10 sm:px-10 md:px-20'>
         <SeasonTable
           seasons={data.seasons.filter((s) => s.name !== 'Especiais')}
           tvShowId={data.id}
         />
         <CastAndCrewCarousel persons={credits.cast} title='Elenco' />
         <CastAndCrewCarousel persons={credits.crew} title='Equipe' />
-      </div>
+      </section>
     </>
   );
 }

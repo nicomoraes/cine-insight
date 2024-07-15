@@ -27,6 +27,7 @@ export default async function MoviePage({ params }: MoviePageParams) {
   const { data, watchProviders } = await getOneMovieById(Number(params.id));
 
   const { cast, crew } = getMoviePersonsFromAppendedCredits(data.credits);
+
   return (
     <>
       <Image
@@ -43,15 +44,15 @@ export default async function MoviePage({ params }: MoviePageParams) {
         className='mask1 -z-10 aspect-[2/3] max-h-svh object-cover brightness-50 xs:hidden'
         fill
       />
-      <div className='flex flex-col gap-4 px-4 pt-96 sm:px-10 md:px-20'>
+      <section className='flex flex-col gap-4 px-4 pt-20 sm:px-10 md:px-20'>
         <WatchProviders providers={watchProviders} />
         <h1 className='text-xl font-bold tracking-wide xs:text-2xl md:text-4xl lg:text-5xl'>
           {data.title || data.original_title}
         </h1>
         <div className='flex items-center gap-x-4'>
-          <Rating voteAverage={data.vote_average} />
-          <ReleaseYear releaseDate={data.release_date} />
-          <Runtime runtime={data.runtime} />
+          <Rating voteAverage={data.vote_average} voteCount={data.vote_count} />
+          <ReleaseYear releaseDate={data.release_date} className='text-lg' />
+          <Runtime runtime={data.runtime} className='text-lg' />
           <CertificationBadge variant={getMovieBrazilCertification(data.releases)} />
         </div>
         {getDirectorsFromAppendedCredits(data.credits).length != 0 && (
@@ -65,17 +66,17 @@ export default async function MoviePage({ params }: MoviePageParams) {
             {data.overview}
           </p>
         )}
-      </div>
-      <div className='space-y-4 px-4 pb-6 pt-10 sm:px-20'>
-        <CastAndCrewCarousel persons={cast} title='Elenco' />
-        <CastAndCrewCarousel persons={crew} title='Equipe' />
+      </section>
+      <section className='space-y-4 px-4 pb-6 pt-10 md:px-20'>
         {data.belongs_to_collection && (
           <CollectionCarousel
             queryFn={() => getCollectionById(data.belongs_to_collection.id)}
             title='Coleção'
           />
         )}
-      </div>
+        <CastAndCrewCarousel persons={cast} title='Elenco' />
+        <CastAndCrewCarousel persons={crew} title='Equipe' />
+      </section>
     </>
   );
 }

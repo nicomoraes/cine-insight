@@ -6,7 +6,7 @@ import { MediaCarouselSkeleton } from '../../_components/CollectionCarousel';
 export default function Loading() {
   return (
     <>
-      <div className='flex flex-col gap-6 px-4 pt-96 sm:px-10 md:px-20'>
+      <div className='flex flex-col gap-6 px-4 pt-20 sm:px-10 md:px-20'>
         <div className='inline-flex items-center gap-4'>
           <Skeleton className='h-6 w-24' />
           <Skeleton className='aspect-square w-[34px]' />
@@ -28,9 +28,9 @@ export default function Loading() {
         </div>
       </div>
       <div className='space-y-4 px-4 pb-6 pt-10 sm:px-20'>
-        <CastAndCrewCarouselSkeleton />
-        <CastAndCrewCarouselSkeleton />
         <MediaCarouselSkeleton />
+        <CastAndCrewCarouselSkeleton />
+        <CastAndCrewCarouselSkeleton />
       </div>
     </>
   );
