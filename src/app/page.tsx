@@ -9,7 +9,7 @@ type HomeParams = {
 
 export default async function Home({ searchParams: { q } }: HomeParams) {
   return (
-    <main className='flex min-h-svh w-full flex-col gap-4 px-10 py-10'>
+    <main className='flex min-h-svh w-full flex-col gap-4 px-4 py-10 sm:px-10'>
       <div className='col mx-auto flex w-full max-w-xl flex-col gap-2'>
         <SearchBar />
       </div>
