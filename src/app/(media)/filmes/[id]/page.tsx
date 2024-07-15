@@ -4,10 +4,10 @@ import { getCollectionById } from '@/data/media';
 import { getOneMovieById } from '@/data/movie';
 
 import {
-  getDirectorsFromAppendedCredits,
-  getMovieBrazilCertification,
-  getMoviePersonsFromAppendedCredits,
-} from '@/lib/getters';
+  extractDirectorsFromCredits,
+  formatMovieCredits,
+  getBrazilianMovieCertification,
+} from '@/lib/movie';
 
 import Image from '@/components/common/Image';
 
@@ -24,53 +24,57 @@ type MoviePageParams = {
 export default async function MoviePage({ params }: MoviePageParams) {
   if (!params.id) redirect('/');
 
-  const { data, watchProviders } = await getOneMovieById(Number(params.id));
+  const { movie, watchProviders } = await getOneMovieById(Number(params.id));
 
-  const { cast, crew } = getMoviePersonsFromAppendedCredits(data.credits);
+  const { cast, crew } = formatMovieCredits(movie.credits);
+
+  const directors = extractDirectorsFromCredits(movie.credits);
+
+  const certification = getBrazilianMovieCertification(movie.releases);
 
   return (
     <>
       <Image
-        alt={`Pano de fundo do filme ${data.title || data.original_title}`}
+        alt={`Pano de fundo do filme ${movie.title || movie.original_title}`}
         fallback='/img/16x9_image_fallback.png'
-        src={`${process.env.NEXT_PUBLIC_TMDB_API_BASE_IMAGE_URL}/original/${data.backdrop_path}`}
+        src={`${process.env.NEXT_PUBLIC_TMDB_API_BASE_IMAGE_URL}/original/${movie.backdrop_path}`}
         className='mask1 -z-10 max-h-svh w-full object-cover brightness-50 max-xs:hidden'
         fill
       />
       <Image
-        alt={`Poster do filme ${data.title || data.original_title}`}
+        alt={`Poster do filme ${movie.title || movie.original_title}`}
         fallback='/img/16x9_image_fallback.png'
-        src={`${process.env.NEXT_PUBLIC_TMDB_API_BASE_IMAGE_URL}/original/${data.poster_path}`}
+        src={`${process.env.NEXT_PUBLIC_TMDB_API_BASE_IMAGE_URL}/original/${movie.poster_path}`}
         className='mask1 -z-10 aspect-[2/3] max-h-svh object-cover brightness-50 xs:hidden'
         fill
       />
       <section className='flex flex-col gap-4 px-4 pt-20 sm:px-10 md:px-20'>
         <WatchProviders providers={watchProviders} />
         <h1 className='text-xl font-bold tracking-wide xs:text-2xl md:text-4xl lg:text-5xl'>
-          {data.title || data.original_title}
+          {movie.title || movie.original_title}
         </h1>
         <div className='flex items-center gap-x-4'>
-          <Rating voteAverage={data.vote_average} voteCount={data.vote_count} />
-          <ReleaseYear releaseDate={data.release_date} className='text-lg' />
-          <Runtime runtime={data.runtime} className='text-lg' />
-          <CertificationBadge variant={getMovieBrazilCertification(data.releases)} />
+          <Rating voteAverage={movie.vote_average} voteCount={movie.vote_count} />
+          <ReleaseYear releaseDate={movie.release_date} className='text-lg' />
+          <Runtime runtime={movie.runtime} className='text-lg' />
+          <CertificationBadge variant={certification} />
         </div>
-        {getDirectorsFromAppendedCredits(data.credits).length != 0 && (
+        {directors.length > 0 && (
           <p>
             <span className='text-sm font-medium xs:text-lg'>Direção: </span>
-            {getDirectorsFromAppendedCredits(data.credits).join(', ')}
+            {directors.join(', ')}
           </p>
         )}
-        {data.overview && (
+        {movie.overview && (
           <p className='max-w-xl text-balance text-foreground/90 max-xs:text-sm'>
-            {data.overview}
+            {movie.overview}
           </p>
         )}
       </section>
       <section className='space-y-4 px-4 pb-6 pt-10 md:px-20'>
-        {data.belongs_to_collection && (
+        {movie.belongs_to_collection && (
           <CollectionCarousel
-            queryFn={() => getCollectionById(data.belongs_to_collection.id)}
+            queryFn={() => getCollectionById(movie.belongs_to_collection.id)}
             title='Coleção'
           />
         )}

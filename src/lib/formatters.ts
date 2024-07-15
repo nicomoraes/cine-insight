@@ -1,20 +1,24 @@
-export function formatUsdCurrency(number: number) {
+export function formatNumberToUsdCurrency(number: number) {
   return new Intl.NumberFormat('pt-BR', {
     style: 'currency',
     currency: 'USD',
   }).format(number);
 }
 
-export function getFullYear(dateAsString: string) {
-  return new Date(dateAsString).getFullYear();
-}
-
-export function getPtBrReleaseDate(dateAsString: string) {
+export function formatReleaseDateToPtBrDate(dateAsString: string) {
   return new Intl.DateTimeFormat('pt-BR').format(new Date(dateAsString));
 }
 
-export function formatToStarRating(note: number) {
-  const convertedNote = note / 2;
+export function formatMinutesToRuntimeString(runtime: number) {
+  const hours = Math.floor(runtime / 60);
+  const remainingMinutes = runtime % 60;
+  return hours > 0
+    ? `${hours}h ${String(remainingMinutes).padStart(2, '0')}min`
+    : `${remainingMinutes}min`;
+}
+
+export function formatVoteAverageToStarRating(voteAverage: number) {
+  const convertedNote = voteAverage / 2;
   const roundedNote = Math.round(convertedNote * 2) / 2;
   const fullStars = Math.floor(roundedNote);
   const halfStars = roundedNote - fullStars === 0.5 ? 1 : 0;

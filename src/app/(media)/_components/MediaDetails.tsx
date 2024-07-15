@@ -1,7 +1,10 @@
 import { ComponentProps } from 'react';
 
-import { getFullYear, getPtBrReleaseDate } from '@/lib/formatters';
-import { getRuntimeString } from '@/lib/getters';
+import {
+  formatMinutesToRuntimeString,
+  formatReleaseDateToPtBrDate,
+} from '@/lib/formatters';
+import { getFullYearFromStringDate } from '@/lib/getters';
 
 import StarRating from './StarRating';
 
@@ -16,14 +19,18 @@ interface ReleaseYearProps extends ComponentProps<'span'> {
   releaseDate: string | null;
 }
 export function ReleaseYear({ releaseDate, ...props }: ReleaseYearProps) {
-  return <span {...props}>{releaseDate ? getFullYear(releaseDate) : '-'}</span>;
+  return (
+    <span {...props}>{releaseDate ? getFullYearFromStringDate(releaseDate) : '-'}</span>
+  );
 }
 
 interface ReleaseDateProps extends ComponentProps<'span'> {
   releaseDate: string | null;
 }
 export function ReleaseDate({ releaseDate, ...props }: ReleaseDateProps) {
-  return <span {...props}>{releaseDate ? getPtBrReleaseDate(releaseDate) : '-'}</span>;
+  return (
+    <span {...props}>{releaseDate ? formatReleaseDateToPtBrDate(releaseDate) : '-'}</span>
+  );
 }
 
 interface RuntimeProps extends ComponentProps<'span'> {
@@ -31,7 +38,7 @@ interface RuntimeProps extends ComponentProps<'span'> {
 }
 export function Runtime({ runtime, ...props }: RuntimeProps) {
   if (!runtime) return <span className='text-lg'>-</span>;
-  return <span {...props}>{runtime ? getRuntimeString(runtime) : '-'}</span>;
+  return <span {...props}>{runtime ? formatMinutesToRuntimeString(runtime) : '-'}</span>;
 }
 
 interface NumberOfSeasonsProps extends ComponentProps<'span'> {

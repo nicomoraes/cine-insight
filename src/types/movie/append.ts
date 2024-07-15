@@ -1,4 +1,4 @@
-export type AppendedReleases = {
+export type AppendedReleasesRoot = {
   countries: AppendedReleaseCountry[];
 };
 
@@ -10,7 +10,7 @@ type AppendedReleaseCountry = {
   release_date: string;
 };
 
-export type AppendedCredits = {
+export type AppendedCreditsRoot = {
   cast: AppendedCastMember[];
   crew: AppendedCrewMember[];
 };

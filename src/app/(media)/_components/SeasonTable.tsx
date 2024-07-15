@@ -5,9 +5,9 @@ import { useState } from 'react';
 import { SmileySad } from '@phosphor-icons/react';
 import { useQuery } from '@tanstack/react-query';
 
-import { Season } from '@/types/tv';
+import { Season } from '@/types/tv-show';
 
-import { getTvShowSeason } from '@/data/tv';
+import { getTvShowSeasonFromRouteHandler } from '@/data/tv';
 
 import { generateRandonKey } from '@/lib/generators';
 
@@ -41,7 +41,7 @@ export default function SeasonTable({ tvShowId, seasons }: SeasonTableProps) {
 
   const { data, isPending, status } = useQuery({
     queryKey: ['tv_show_season', tvShowId, seasonNumber],
-    queryFn: () => getTvShowSeason({ seasonNumber, tvShowId }),
+    queryFn: () => getTvShowSeasonFromRouteHandler({ tvShowId, seasonNumber }),
   });
 
   if (status === 'error')

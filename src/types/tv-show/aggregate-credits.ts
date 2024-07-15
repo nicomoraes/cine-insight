@@ -1,4 +1,4 @@
-export type AggregateCredits = {
+export type AggregateCreditsRoot = {
   cast: Cast[];
   crew: Crew[];
   id: number;

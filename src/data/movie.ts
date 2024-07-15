@@ -1,43 +1,41 @@
 import { MovieRoot } from '@/types/movie';
-import { AppendedCredits, AppendedReleases } from '@/types/movie-append';
-import { WatchProviderRoot } from '@/types/watch-provider';
+import { AppendedCreditsRoot, AppendedReleasesRoot } from '@/types/movie/append';
 
 import { TMDB_DEFAULT_FETCH_CONFIG } from '@/constants/fetch';
 
 import { fetcher } from '@/lib/fetcher';
+import { getBrazilFlatrateWatchProviders } from '@/lib/getters';
 
-type GetOneMovieByIdFetch = MovieRoot & {
-  releases: AppendedReleases;
-  credits: AppendedCredits;
+import { generateGetWatchProvidersByIdPromise } from './media';
+
+type GenerateMovieDetailsFetchReturn = MovieRoot & {
+  releases: AppendedReleasesRoot;
+  credits: AppendedCreditsRoot;
 };
 
-export async function getOneMovieById(id: number) {
+async function generateMovieDetailsPromise(id: number) {
   const url = new URL(`${process.env.NEXT_PUBLIC_TMDB_API_BASE_URL}/movie/${id}`);
   url.searchParams.append('language', 'pt-BR');
   url.searchParams.append('append_to_response', 'releases,credits');
 
-  const watchProvidersUrl = new URL(
-    `${process.env.NEXT_PUBLIC_TMDB_API_BASE_URL}/movie/${id}/watch/providers`,
-  );
-
-  const moviePromise = fetcher<GetOneMovieByIdFetch>(
+  const promise = fetcher<GenerateMovieDetailsFetchReturn>(
     url.toString(),
     TMDB_DEFAULT_FETCH_CONFIG,
   );
 
-  const watchProvidersPromise = fetcher<WatchProviderRoot>(
-    watchProvidersUrl.toString(),
-    TMDB_DEFAULT_FETCH_CONFIG,
-  );
+  return promise;
+}
 
-  const [data, watchProviders] = await Promise.all([moviePromise, watchProvidersPromise]);
+export async function getOneMovieById(id: number) {
+  const moviePromise = generateMovieDetailsPromise(id);
+  const watchProvidersPromise = generateGetWatchProvidersByIdPromise(id, 'movie');
 
-  const brazilWatchProviders =
-    watchProviders.results['BR'] &&
-    watchProviders.results['BR'].flatrate &&
-    watchProviders.results['BR'].flatrate.length > 0
-      ? watchProviders.results['BR'].flatrate
-      : null;
+  const [movie, watchProviders] = await Promise.all([
+    moviePromise,
+    watchProvidersPromise,
+  ]);
 
-  return { data, watchProviders: brazilWatchProviders };
+  const brazilWatchProviders = getBrazilFlatrateWatchProviders(watchProviders);
+
+  return { movie, watchProviders: brazilWatchProviders };
 }

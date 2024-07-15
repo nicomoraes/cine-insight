@@ -1,6 +1,6 @@
 import { Star, StarHalf } from '@phosphor-icons/react/dist/ssr';
 
-import { formatToStarRating } from '@/lib/formatters';
+import { formatVoteAverageToStarRating } from '@/lib/formatters';
 import { generateRandonKey } from '@/lib/generators';
 
 type StarRatingProps = {
@@ -12,7 +12,7 @@ export default function StarRating({
   voteAverage,
   options = { size: 20 },
 }: StarRatingProps) {
-  const { fullStars, halfStars, emptyStars } = formatToStarRating(voteAverage);
+  const { fullStars, halfStars, emptyStars } = formatVoteAverageToStarRating(voteAverage);
   return (
     <div className='inline-flex items-center gap-1 text-yellow-400'>
       {Array(Number(fullStars))

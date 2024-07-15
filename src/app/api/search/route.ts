@@ -11,12 +11,12 @@ export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams;
 
   const q = searchParams.get('q') ?? '';
-  const page = searchParams.get('page') ?? 1;
+  const page = searchParams.get('page') ?? '1';
 
   const url = new URL(`${process.env.NEXT_PUBLIC_TMDB_API_BASE_URL}/search/multi`);
   url.searchParams.append('include_adult', 'false');
   url.searchParams.append('language', 'pt-BR');
-  url.searchParams.append('page', String(page));
+  url.searchParams.append('page', page);
   url.searchParams.append('query', q);
 
   const data = await fetcher<SearchRoot<MultiSearchResult>>(

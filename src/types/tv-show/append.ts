@@ -1,4 +1,4 @@
-export interface AppendedContentRatings {
+export interface AppendedContentRatingsRoot {
   results: AppendedContentRatingResult[];
   id: number;
 }

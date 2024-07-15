@@ -6,3 +6,5 @@ export const STATUS_TRANSLATIONS = {
   Released: 'Lançado',
   Canceled: 'Cancelado',
 };
+
+export const VALID_CERTIFICATIONS = ['L', '10', '12', '14', '16', '18'];
