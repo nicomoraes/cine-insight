@@ -3,17 +3,14 @@ import { MultiSearchResult, SearchRoot } from '@/types/search';
 import { TrendingRoot } from '@/types/trending';
 import { WatchProviderRoot } from '@/types/watch-provider';
 
-import { TMDB_DEFAULT_FETCH_CONFIG } from '@/constants/fetch';
-
-import { fetcher } from '@/lib/fetcher';
+import { fetcher, tmdbFetcher } from '@/lib/fetcher';
 
 export async function getAllTrending(page: number = 1) {
   const url = new URL(`${process.env.NEXT_PUBLIC_TMDB_API_BASE_URL}/trending/all/day`);
   url.searchParams.append('language', 'pt-BR');
   url.searchParams.append('page', String(page));
 
-  const data = await fetcher<TrendingRoot>(url.toString(), {
-    ...TMDB_DEFAULT_FETCH_CONFIG,
+  const data = await tmdbFetcher<TrendingRoot>(url.toString(), {
     next: {
       revalidate: 60 * 60,
     },
@@ -39,7 +36,7 @@ export async function getCollectionById(id: number) {
   const url = new URL(`${process.env.NEXT_PUBLIC_TMDB_API_BASE_URL}/collection/${id})`);
   url.searchParams.append('language', 'pt-BR');
 
-  const data = await fetcher<CollectionRoot>(url.toString(), TMDB_DEFAULT_FETCH_CONFIG);
+  const data = await tmdbFetcher<CollectionRoot>(url.toString());
 
   return data.parts;
 }
@@ -52,10 +49,7 @@ export function generateGetWatchProvidersByIdPromise(
     `${process.env.NEXT_PUBLIC_TMDB_API_BASE_URL}/${mediaType}/${id}/watch/providers`,
   );
 
-  const promise = fetcher<WatchProviderRoot>(
-    watchProvidersUrl.toString(),
-    TMDB_DEFAULT_FETCH_CONFIG,
-  );
+  const promise = tmdbFetcher<WatchProviderRoot>(watchProvidersUrl.toString());
 
   return promise;
 }

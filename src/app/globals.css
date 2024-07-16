@@ -41,7 +41,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background font-sans text-foreground;
+    @apply min-h-svh bg-background font-sans text-foreground;
   }
 
   /* clears the ‘X’ from Internet Explorer */
@@ -65,7 +65,7 @@
 }
 
 @layer utilities {
-  .mask1 {
+  .media-bg-image-gradient {
     -webkit-mask-image: linear-gradient(
       to top,
       transparent 25%,

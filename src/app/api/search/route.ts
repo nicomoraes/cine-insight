@@ -2,9 +2,7 @@ import { NextRequest } from 'next/server';
 
 import { MultiSearchResult, SearchRoot } from '@/types/search';
 
-import { TMDB_DEFAULT_FETCH_CONFIG } from '@/constants/fetch';
-
-import { fetcher } from '@/lib/fetcher';
+import { tmdbFetcher } from '@/lib/fetcher';
 import { getNextPage } from '@/lib/getters';
 
 export async function GET(req: NextRequest) {
@@ -19,12 +17,11 @@ export async function GET(req: NextRequest) {
   url.searchParams.append('page', page);
   url.searchParams.append('query', q);
 
-  const data = await fetcher<SearchRoot<MultiSearchResult>>(
-    url.toString(),
-    TMDB_DEFAULT_FETCH_CONFIG,
-  );
-
-  const nextPage = getNextPage({ page: data.page, total_pages: data.total_pages });
-
-  return Response.json({ ...data, nextPage });
+  try {
+    const data = await tmdbFetcher<SearchRoot<MultiSearchResult>>(url.toString());
+    const nextPage = getNextPage({ page: data.page, total_pages: data.total_pages });
+    return Response.json({ ...data, nextPage });
+  } catch (error) {
+    return Response.json({ message: 'Erro interno do servidor' }, { status: 500 });
+  }
 }

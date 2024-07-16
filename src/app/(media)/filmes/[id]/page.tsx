@@ -14,6 +14,7 @@ import Image from '@/components/common/Image';
 import { CastAndCrewCarousel } from '../../_components/CastAndCrewCarousel';
 import { CertificationBadge } from '../../_components/CertificationBadge';
 import CollectionCarousel from '../../_components/CollectionCarousel';
+import { CollectionCarouselError } from '../../_components/CollectionCarouselError';
 import { Rating, ReleaseYear, Runtime } from '../../_components/MediaDetails';
 import { WatchProviders } from '../../_components/WatchProviders';
 
@@ -38,14 +39,14 @@ export default async function MoviePage({ params }: MoviePageParams) {
         alt={`Pano de fundo do filme ${movie.title || movie.original_title}`}
         fallback='/img/16x9_image_fallback.png'
         src={`${process.env.NEXT_PUBLIC_TMDB_API_BASE_IMAGE_URL}/original/${movie.backdrop_path}`}
-        className='mask1 -z-10 max-h-svh w-full object-cover brightness-50 max-xs:hidden'
+        className='media-bg-image-gradient -z-10 max-h-svh w-full object-cover brightness-50 max-xs:hidden'
         fill
       />
       <Image
         alt={`Poster do filme ${movie.title || movie.original_title}`}
         fallback='/img/16x9_image_fallback.png'
         src={`${process.env.NEXT_PUBLIC_TMDB_API_BASE_IMAGE_URL}/original/${movie.poster_path}`}
-        className='mask1 -z-10 aspect-[2/3] max-h-svh object-cover brightness-50 xs:hidden'
+        className='media-bg-image-gradient -z-10 aspect-[2/3] max-h-svh object-cover brightness-50 xs:hidden'
         fill
       />
       <section className='flex flex-col gap-4 px-4 pt-20 sm:px-10 md:px-20'>
@@ -73,10 +74,12 @@ export default async function MoviePage({ params }: MoviePageParams) {
       </section>
       <section className='space-y-4 px-4 pb-6 pt-10 md:px-20'>
         {movie.belongs_to_collection && (
-          <CollectionCarousel
-            queryFn={() => getCollectionById(movie.belongs_to_collection.id)}
-            title='Coleção'
-          />
+          <CollectionCarouselError>
+            <CollectionCarousel
+              queryFn={() => getCollectionById(movie.belongs_to_collection.id)}
+              title='Coleção'
+            />
+          </CollectionCarouselError>
         )}
         <CastAndCrewCarousel persons={cast} title='Elenco' />
         <CastAndCrewCarousel persons={crew} title='Equipe' />

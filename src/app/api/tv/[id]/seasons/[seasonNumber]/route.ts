@@ -4,9 +4,7 @@ import * as v from 'valibot';
 
 import { TVSeasonRoot } from '@/types/tv-show/season';
 
-import { TMDB_DEFAULT_FETCH_CONFIG } from '@/constants/fetch';
-
-import { fetcher } from '@/lib/fetcher';
+import { tmdbFetcher } from '@/lib/fetcher';
 
 const paramsSchema = v.object({
   id: v.pipe(
@@ -29,7 +27,7 @@ export async function GET(_req: NextRequest, { params }: Params) {
   const tvShowIdSchemaResult = v.safeParse(paramsSchema, params);
 
   if (!tvShowIdSchemaResult.success) {
-    return Response.json({ message: 'Parâmetros inválidos' }, { status: 400 });
+    return Response.json({ message: 'Parâmetros inválidos' }, { status: 422 });
   }
 
   const url = new URL(
@@ -38,7 +36,7 @@ export async function GET(_req: NextRequest, { params }: Params) {
 
   url.searchParams.append('language', 'pt-BR');
 
-  const data = await fetcher<TVSeasonRoot>(url.toString(), TMDB_DEFAULT_FETCH_CONFIG);
+  const data = await tmdbFetcher<TVSeasonRoot>(url.toString());
 
   return Response.json(data);
 }

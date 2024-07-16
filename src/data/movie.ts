@@ -1,9 +1,8 @@
 import { MovieRoot } from '@/types/movie';
 import { AppendedCreditsRoot, AppendedReleasesRoot } from '@/types/movie/append';
 
-import { TMDB_DEFAULT_FETCH_CONFIG } from '@/constants/fetch';
-
-import { fetcher } from '@/lib/fetcher';
+import { handlePossibleNotFoundError } from '@/lib/errors';
+import { tmdbFetcher } from '@/lib/fetcher';
 import { getBrazilFlatrateWatchProviders } from '@/lib/getters';
 
 import { generateGetWatchProvidersByIdPromise } from './media';
@@ -18,10 +17,7 @@ async function generateMovieDetailsPromise(id: number) {
   url.searchParams.append('language', 'pt-BR');
   url.searchParams.append('append_to_response', 'releases,credits');
 
-  const promise = fetcher<GenerateMovieDetailsFetchReturn>(
-    url.toString(),
-    TMDB_DEFAULT_FETCH_CONFIG,
-  );
+  const promise = tmdbFetcher<GenerateMovieDetailsFetchReturn>(url.toString());
 
   return promise;
 }
@@ -30,12 +26,16 @@ export async function getOneMovieById(id: number) {
   const moviePromise = generateMovieDetailsPromise(id);
   const watchProvidersPromise = generateGetWatchProvidersByIdPromise(id, 'movie');
 
-  const [movie, watchProviders] = await Promise.all([
-    moviePromise,
-    watchProvidersPromise,
-  ]);
+  try {
+    const [movie, watchProviders] = await Promise.all([
+      moviePromise,
+      watchProvidersPromise,
+    ]);
 
-  const brazilWatchProviders = getBrazilFlatrateWatchProviders(watchProviders);
+    const brazilWatchProviders = getBrazilFlatrateWatchProviders(watchProviders);
 
-  return { movie, watchProviders: brazilWatchProviders };
+    return { movie, watchProviders: brazilWatchProviders };
+  } catch (error) {
+    return handlePossibleNotFoundError(error);
+  }
 }

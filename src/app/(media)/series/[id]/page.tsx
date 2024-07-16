@@ -33,14 +33,14 @@ export default async function TvShowPage({ params }: TvShowPageParams) {
         alt={`Pano de fundo do filme ${tvShow.name || tvShow.original_name}`}
         fallback='/img/16x9_image_fallback.png'
         src={`${process.env.NEXT_PUBLIC_TMDB_API_BASE_IMAGE_URL}/original/${tvShow.backdrop_path}`}
-        className='mask1 -z-10 max-h-svh w-full object-cover brightness-[.4] max-xs:hidden'
+        className='media-bg-image-gradient -z-10 max-h-svh w-full object-cover brightness-[.4] max-xs:hidden'
         fill
       />
       <Image
         alt={`Poster do filme ${tvShow.name || tvShow.original_name}`}
         fallback='/img/16x9_image_fallback.png'
         src={`${process.env.NEXT_PUBLIC_TMDB_API_BASE_IMAGE_URL}/original/${tvShow.poster_path}`}
-        className='mask1 -z-10 aspect-[2/3] max-h-svh object-cover brightness-50 xs:hidden'
+        className='media-bg-image-gradient -z-10 aspect-[2/3] max-h-svh object-cover brightness-50 xs:hidden'
         fill
       />
       <section className='flex flex-col gap-4 px-4 pt-20 sm:px-10 md:px-20'>

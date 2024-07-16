@@ -30,13 +30,12 @@ export function SearchGrid({ q }: SearchGridProps) {
     if (inView && hasNextPage) fetchNextPage();
   }, [fetchNextPage, inView, hasNextPage]);
 
-  const results = useMemo(
-    () =>
-      data?.pages.reduce<MultiSearchResult[]>((prev, curr) => {
-        return [...prev, ...curr.results];
-      }, []),
-    [data],
-  );
+  const results = useMemo(() => {
+    if (error) return [];
+    return data?.pages.reduce<MultiSearchResult[]>((prev, curr) => {
+      return [...prev, ...curr.results];
+    }, []);
+  }, [data?.pages, error]);
 
   if (error)
     return (
@@ -48,16 +47,15 @@ export function SearchGrid({ q }: SearchGridProps) {
 
   return (
     <>
-      <h2 className='inline-flex w-full flex-wrap items-center gap-2 whitespace-nowrap font-medium sm:text-2xl'>
-        <span className='text-muted-foreground'>{data?.pages[0].total_results}</span>
-        resultados para
-        <span className='line-clamp-1 text-primary'>&ldquo;{q}&rdquo;</span>
+      <h2 className='inline-flex w-full flex-wrap items-center gap-2 whitespace-nowrap text-lg'>
+        {data?.pages[0].total_results} resultados para
+        <span className='font-bold'>&ldquo;{q}&rdquo;</span>
       </h2>
       {isPending && <MediaGridLoading />}
       {results?.length === 0 && (
         <div className='mx-auto my-10 flex flex-col items-center gap-2 text-center'>
           <h2 className='flex items-center gap-2 text-3xl font-bold'>Sem resultados!</h2>
-          <p className='text-xl'>
+          <p className='text-xl text-foreground/80'>
             Nenhum resultado foi encontrado a partir da sua pesquisa.
           </p>
         </div>

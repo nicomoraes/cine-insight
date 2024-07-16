@@ -1,30 +1,32 @@
 'use client';
 
-import { FormEvent, useCallback, useEffect, useState } from 'react';
+import { ComponentProps, FormEvent, useCallback, useEffect, useState } from 'react';
 
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 import { MagnifyingGlass, XCircle } from '@phosphor-icons/react';
 import { AnimatePresence, motion } from 'framer-motion';
 
+import { cn } from '@/lib/utils';
+
 import { Button } from '../ui/button';
 
-export function SearchBar() {
+type SearchBarProps = { formClassName?: ComponentProps<'form'>['className'] };
+
+export function SearchBar({ formClassName }: SearchBarProps) {
   const router = useRouter();
-  const pathname = usePathname();
   const searchParams = useSearchParams();
   const [query, setQuery] = useState('');
 
   useEffect(() => {
     const params = new URLSearchParams(searchParams.toString());
     setQuery(params.get('q') ?? '');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (query.length === 0) return;
-    router.push(pathname + '?' + createQueryString([['q', query]]));
+    router.push('/' + '?' + createQueryString([['q', query]]));
   }
 
   const createQueryString = useCallback(
@@ -40,21 +42,18 @@ export function SearchBar() {
     [searchParams],
   );
 
-  const clearQueryString = useCallback(() => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.delete('q');
-    return params.toString();
-  }, [searchParams]);
-
   function resetSearch() {
-    router.push(pathname + '?' + clearQueryString());
+    router.push('/');
     setQuery('');
   }
 
   return (
     <form
       onSubmit={onSubmit}
-      className='mx-auto flex w-full max-w-lg items-center gap-y-2 rounded-md border bg-card px-4 py-2 text-card-foreground shadow-[0_0_30px_-10px_#000000] focus-within:multi-[outline-primary;outline;outline-[3px]]'
+      className={cn(
+        'flex w-full max-w-lg items-center gap-y-2 rounded-md border bg-card px-4 py-2 text-card-foreground shadow-[0_0_30px_-10px_#000000] focus-within:multi-[outline-primary;outline;outline-[3px]]',
+        formClassName,
+      )}
     >
       <input
         onChange={(e) => setQuery(e.currentTarget.value)}
