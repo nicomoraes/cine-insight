@@ -11,6 +11,7 @@ import { getSearch } from '@/data/media';
 
 import { generateRandonKey } from '@/lib/generators';
 
+import BackToTopButton from '../common/BackToTopButton';
 import { MediaGrid, MediaGridCard, MediaGridLoading } from './MediaGrid';
 
 type SearchGridProps = { q: string };
@@ -47,6 +48,7 @@ export function SearchGrid({ q }: SearchGridProps) {
 
   return (
     <>
+      <BackToTopButton />
       <h2 className='inline-flex w-full flex-wrap items-center gap-2 whitespace-nowrap text-lg'>
         {data?.pages[0].total_results} resultados para
         <span className='font-bold'>&ldquo;{q}&rdquo;</span>

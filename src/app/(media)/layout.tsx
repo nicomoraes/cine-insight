@@ -1,3 +1,5 @@
+import BackToTopButton from '@/components/common/BackToTopButton';
+
 import TopNav from './_components/TopNav';
 
 export default async function MediaLayout({
@@ -6,6 +8,7 @@ export default async function MediaLayout({
   return (
     <>
       <TopNav />
+      <BackToTopButton />
       <main className='relative min-h-svh w-full'>{children}</main>;
     </>
   );

@@ -1,9 +1,8 @@
 'use client';
 
-import { ComponentProps, FormEvent, useCallback, useEffect, useState } from 'react';
+import { ComponentProps } from 'react';
 
-import { useRouter, useSearchParams } from 'next/navigation';
-
+import { useSearchBar } from '@/hooks/use-search-bar';
 import { MagnifyingGlass, XCircle } from '@phosphor-icons/react';
 import { AnimatePresence, motion } from 'framer-motion';
 
@@ -14,38 +13,7 @@ import { Button } from '../ui/button';
 type SearchBarProps = { formClassName?: ComponentProps<'form'>['className'] };
 
 export function SearchBar({ formClassName }: SearchBarProps) {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const [query, setQuery] = useState('');
-
-  useEffect(() => {
-    const params = new URLSearchParams(searchParams.toString());
-    setQuery(params.get('q') ?? '');
-  }, []);
-
-  function onSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    if (query.length === 0) return;
-    router.push('/' + '?' + createQueryString([['q', query]]));
-  }
-
-  const createQueryString = useCallback(
-    (queries: [string, string][]) => {
-      const params = new URLSearchParams(searchParams.toString());
-      queries.forEach((q) => {
-        const [key, value] = q;
-        if (params.get(key)) return params.set(key, value);
-        if (value) return params.append(key, value);
-      });
-      return params.toString();
-    },
-    [searchParams],
-  );
-
-  function resetSearch() {
-    router.push('/');
-    setQuery('');
-  }
+  const { onSubmit, query, resetSearch, searchParams, setQuery } = useSearchBar();
 
   return (
     <form
@@ -72,6 +40,7 @@ export function SearchBar({ formClassName }: SearchBarProps) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
+              type='button'
             >
               <span className='ml-2 text-sm text-destructive-foreground hover:bg-transparent hover:text-destructive-foreground/80 max-xs:sr-only xs:block'>
                 Resetar
