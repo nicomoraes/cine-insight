@@ -12,7 +12,7 @@ type GenerateMovieDetailsFetchReturn = MovieRoot & {
   credits: AppendedCreditsRoot;
 };
 
-async function generateMovieDetailsPromise(id: number) {
+export async function generateMovieDetailsPromise(id: number) {
   const url = new URL(`${process.env.NEXT_PUBLIC_TMDB_API_BASE_URL}/movie/${id}`);
   url.searchParams.append('language', 'pt-BR');
   url.searchParams.append('append_to_response', 'releases,credits');

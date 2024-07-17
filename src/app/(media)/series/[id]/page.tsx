@@ -1,7 +1,9 @@
+import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 
-import { getTvShowById } from '@/data/tv';
+import { generateTvShowDetailsPromise, getTvShowById } from '@/data/tv';
 
+import { getGenresList } from '@/lib/getters';
 import { formatTvShowCredits, getBrazilianTvShowCertification } from '@/lib/tv-show';
 
 import Image from '@/components/common/Image';
@@ -11,6 +13,21 @@ import { CertificationBadge } from '../../_components/CertificationBadge';
 import { NumberOfSeasons, Rating, ReleaseYear } from '../../_components/MediaDetails';
 import SeasonTable from '../../_components/SeasonTable';
 import { WatchProviders } from '../../_components/WatchProviders';
+
+export async function generateMetadata({ params }: TvShowPageParams): Promise<Metadata> {
+  const id = params.id;
+
+  const tvShow = await generateTvShowDetailsPromise(Number(id));
+
+  const genresList = getGenresList(tvShow.genres).map((g) => g.toLowerCase());
+
+  return {
+    title: tvShow.name || tvShow.original_name,
+    description: tvShow.overview,
+    keywords: [tvShow.name, ...genresList],
+    category: 'Série',
+  };
+}
 
 type TvShowPageParams = {
   params: { id: string };

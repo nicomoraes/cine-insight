@@ -8,8 +8,38 @@ import { Providers } from '@/components/Providers';
 import { TailwindIndicator } from '@/components/common/TailwindIndicator';
 
 export const metadata: Metadata = {
-  title: 'Next Movies',
-  description: 'Encontre todas as informções de filmes e séries',
+  title: {
+    template: '%s | CineInsight',
+    default: 'CineInsight',
+  },
+  description:
+    'Detalhes estruturados e informativos que enriquecem a experiência ao fornecer informações essenciais sobre filmes e séries, como título, diretor, elenco, gênero, sinopse, classificação e outras características relevantes para facilitar a navegação e descoberta de conteúdo.',
+  keywords: [
+    'filmes',
+    'séries',
+    'streaming',
+    'cinema',
+    'sinopse',
+    'elenco',
+    'crítica',
+    'lançamentos',
+    'estreias',
+    'temporadas',
+    'Netflix',
+    'Amazon Prime Video',
+    'Disney+',
+    'HBO Max',
+    'Globoplay',
+    'Apple TV+',
+    'Paramount+',
+    'Star+',
+    'Telecine',
+    'MUBI',
+    'Looke',
+    'NOW',
+    'Claro TV+',
+  ],
+  creator: 'Nicolas Moraes',
 };
 
 export default function RootLayout({

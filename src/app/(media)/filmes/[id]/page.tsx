@@ -1,8 +1,10 @@
+import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 
 import { getCollectionById } from '@/data/media';
-import { getOneMovieById } from '@/data/movie';
+import { generateMovieDetailsPromise, getOneMovieById } from '@/data/movie';
 
+import { getGenresList } from '@/lib/getters';
 import {
   extractDirectorsFromCredits,
   formatMovieCredits,
@@ -17,6 +19,21 @@ import CollectionCarousel from '../../_components/CollectionCarousel';
 import { CollectionCarouselError } from '../../_components/CollectionCarouselError';
 import { Rating, ReleaseYear, Runtime } from '../../_components/MediaDetails';
 import { WatchProviders } from '../../_components/WatchProviders';
+
+export async function generateMetadata({ params }: MoviePageParams): Promise<Metadata> {
+  const id = params.id;
+
+  const movie = await generateMovieDetailsPromise(Number(id));
+
+  const genresList = getGenresList(movie.genres).map((g) => g.toLowerCase());
+
+  return {
+    title: movie.title,
+    description: movie.overview,
+    keywords: [movie.title, ...genresList],
+    category: 'Filme',
+  };
+}
 
 type MoviePageParams = {
   params: { id: string };

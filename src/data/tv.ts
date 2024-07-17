@@ -13,7 +13,7 @@ type GenerateTvShowDetailsFetchReturn = TVShowRoot & {
   content_ratings: AppendedContentRatingsRoot;
 };
 
-function generateTvShowDetailsPromise(id: number) {
+export function generateTvShowDetailsPromise(id: number) {
   const url = new URL(`${process.env.NEXT_PUBLIC_TMDB_API_BASE_URL}/tv/${id}`);
   url.searchParams.append('language', 'pt-BR');
   url.searchParams.append('append_to_response', 'content_ratings,credits');

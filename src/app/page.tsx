@@ -1,7 +1,13 @@
+import { Metadata } from 'next';
+
 import { SearchBar } from '@/components/home/SearchBar';
 import { SearchGrid } from '@/components/home/SearchGrid';
 import { TrendingGrid } from '@/components/home/TrendingGrid';
 import { TrendingCardError } from '@/components/home/TrendingGridError';
+
+export const metadata: Metadata = {
+  title: 'Página inicial',
+};
 
 type HomeParams = {
   searchParams: Record<string, string>;
