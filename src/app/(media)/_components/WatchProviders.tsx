@@ -1,5 +1,3 @@
-import { ArrowSquareOut } from '@phosphor-icons/react/dist/ssr';
-
 import { Provider } from '@/types/watch-provider';
 
 import { generateRandonKey } from '@/lib/generators';
@@ -7,7 +5,6 @@ import { getStreamingFromWatchProviders } from '@/lib/getters';
 
 import Image from '@/components/common/Image';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
 import {
   HoverCard,
   HoverCardContent,
@@ -27,7 +24,11 @@ export function WatchProviders({ providers }: WatchProvidersProps) {
         const streaming = getStreamingFromWatchProviders(p.provider_name);
         return streaming ? (
           <HoverCard key={generateRandonKey({})}>
-            <HoverCardTrigger>
+            <HoverCardTrigger
+              aria-label='Ir para site da plataforma de streaming'
+              href={streaming.website}
+              rel='noreferrer'
+            >
               <Image
                 alt={p.provider_name}
                 fallback='/img/1x1_image_fallback.png'
@@ -51,14 +52,6 @@ export function WatchProviders({ providers }: WatchProvidersProps) {
                 <div className='space-y-1'>
                   <h4 className='text-sm font-semibold'>{p.provider_name}</h4>
                   <p className='text-balance text-sm'>{streaming.description}</p>
-                  <div className='flex items-center justify-start pt-1'>
-                    <a href={streaming.website} rel='noreferrer' target='_blank'>
-                      <Button variant={'link'} className='p-0'>
-                        Visitar streaming
-                        <ArrowSquareOut size={20} className='ml-2' weight='bold' />
-                      </Button>
-                    </a>
-                  </div>
                 </div>
               </div>
             </HoverCardContent>

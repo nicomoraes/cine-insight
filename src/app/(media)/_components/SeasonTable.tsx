@@ -60,12 +60,12 @@ export default function SeasonTable({ tvShowId, seasons }: SeasonTableProps) {
 
   return (
     <div className='flex w-full flex-col gap-4'>
-      <h3 className='font-medium'>Temporadas e Episódios</h3>
+      <h2 className='font-medium'>Temporadas e Episódios</h2>
       <Select
         onValueChange={(v) => setSeasonNumber(Number(v))}
         value={String(seasonNumber)}
       >
-        <SelectTrigger className='max-w-xs'>
+        <SelectTrigger className='max-w-xs' aria-label='Selecionar temporada da série'>
           <SelectValue placeholder='Selecione a temporada' />
         </SelectTrigger>
         <SelectContent>
