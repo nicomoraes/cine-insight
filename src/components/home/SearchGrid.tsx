@@ -1,13 +1,6 @@
 'use client';
 
-import { useEffect, useMemo } from 'react';
-
-import { useInfiniteQuery } from '@tanstack/react-query';
-import { useInView } from 'react-intersection-observer';
-
-import { MultiSearchResult } from '@/types/search';
-
-import { getSearch } from '@/data/media';
+import { useInfiniteSearchQuery } from '@/hooks/use-infinite-search-query';
 
 import { generateRandonKey } from '@/lib/generators';
 
@@ -17,26 +10,8 @@ import { MediaGrid, MediaGridCard, MediaGridLoading } from './MediaGrid';
 type SearchGridProps = { q: string };
 
 export function SearchGrid({ q }: SearchGridProps) {
-  const { data, error, fetchNextPage, hasNextPage, isFetchingNextPage, isPending } =
-    useInfiniteQuery({
-      queryKey: ['search', q],
-      queryFn: ({ pageParam }) => getSearch({ pageParam, query: q }),
-      initialPageParam: 1,
-      getNextPageParam: (lastPage) => lastPage.nextPage,
-    });
-
-  const { ref, inView } = useInView({ threshold: 0.5 });
-
-  useEffect(() => {
-    if (inView && hasNextPage) fetchNextPage();
-  }, [fetchNextPage, inView, hasNextPage]);
-
-  const results = useMemo(() => {
-    if (error) return [];
-    return data?.pages.reduce<MultiSearchResult[]>((prev, curr) => {
-      return [...prev, ...curr.results];
-    }, []);
-  }, [data?.pages, error]);
+  const { data, error, hasNextPage, isFetchingNextPage, isFetching, ref, isPending } =
+    useInfiniteSearchQuery({ q });
 
   if (error)
     return (
@@ -46,15 +21,18 @@ export function SearchGrid({ q }: SearchGridProps) {
       </div>
     );
 
+  if (isPending) {
+    return <MediaGridLoading />;
+  }
+
   return (
     <>
       <BackToTopButton />
       <h2 className='inline-flex w-full flex-wrap items-center gap-2 whitespace-nowrap text-lg'>
-        {data?.pages[0].total_results} resultados para
+        {data?.totalResults} resultados para
         <span className='font-bold'>&ldquo;{q}&rdquo;</span>
       </h2>
-      {isPending && <MediaGridLoading />}
-      {results?.length === 0 && (
+      {data?.results.length === 0 && (
         <div className='mx-auto my-10 flex flex-col items-center gap-2 text-center'>
           <h2 className='flex items-center gap-2 text-3xl font-bold'>Sem resultados!</h2>
           <p className='text-xl text-foreground/80'>
@@ -62,9 +40,9 @@ export function SearchGrid({ q }: SearchGridProps) {
           </p>
         </div>
       )}
-      {results && (
+      {data && (
         <MediaGrid>
-          {results?.map((media) => (
+          {data?.results.map((media) => (
             <MediaGridCard
               key={generateRandonKey({})}
               mediaId={media.id}
@@ -75,10 +53,8 @@ export function SearchGrid({ q }: SearchGridProps) {
           ))}
         </MediaGrid>
       )}
-      {!isPending && hasNextPage && <div ref={ref} className='h-[10px]' />}
-      {!isPending && isFetchingNextPage && data?.pages?.length > 1 && (
-        <MediaGridLoading size={6} />
-      )}
+      {!isFetching && hasNextPage && <div ref={ref} className='h-[10px]' />}
+      {isFetchingNextPage && <MediaGridLoading size={6} />}
     </>
   );
 }
