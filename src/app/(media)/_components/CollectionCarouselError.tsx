@@ -16,7 +16,7 @@ export function CollectionCarouselError({ children }: CollectionCarouselErrorPro
       fallback={
         <Alert
           variant={'destructive'}
-          className='w-max bg-destructive text-destructive-foreground'
+          className='w-full bg-destructive text-destructive-foreground sm:w-max'
         >
           <AlertTitle>Ops! Algo deu errado.</AlertTitle>
           <AlertDescription>

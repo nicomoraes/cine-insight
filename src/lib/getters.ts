@@ -1,4 +1,4 @@
-import { Genre } from '@/types/movie';
+import { Genre, ProductionCompany } from '@/types/movie';
 import { SearchRoot, SingleSearchResult } from '@/types/search';
 import { WatchProviderRoot } from '@/types/watch-provider';
 
@@ -37,4 +37,9 @@ export function getBrazilFlatrateWatchProviders(watchProviders: WatchProviderRoo
     watchProviders.results['BR'].flatrate.length > 0
     ? watchProviders.results['BR'].flatrate
     : null;
+}
+
+export function getProductionCompanies(companies: ProductionCompany[]) {
+  if (!companies) return [];
+  return companies.map((c) => `${c.name}`);
 }

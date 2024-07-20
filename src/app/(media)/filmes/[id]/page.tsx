@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation';
 import { getCollectionById } from '@/data/media';
 import { generateMovieDetailsPromise, getOneMovieById } from '@/data/movie';
 
-import { getGenresList } from '@/lib/getters';
+import { getGenresList, getProductionCompanies } from '@/lib/getters';
 import {
   extractDirectorsFromCredits,
   formatMovieCredits,
@@ -17,7 +17,8 @@ import { CastAndCrewCarousel } from '../../_components/CastAndCrewCarousel';
 import { CertificationBadge } from '../../_components/CertificationBadge';
 import CollectionCarousel from '../../_components/CollectionCarousel';
 import { CollectionCarouselError } from '../../_components/CollectionCarouselError';
-import { Rating, ReleaseYear, Runtime } from '../../_components/MediaDetails';
+import { CompaniesList, FinacialResults } from '../../_components/ExtraDetails';
+import { Overview, Rating, ReleaseYear, Runtime } from '../../_components/MediaDetails';
 import { WatchProviders } from '../../_components/WatchProviders';
 
 export async function generateMetadata({ params }: MoviePageParams): Promise<Metadata> {
@@ -50,6 +51,8 @@ export default async function MoviePage({ params }: MoviePageParams) {
 
   const certification = getBrazilianMovieCertification(movie.releases);
 
+  const productionCompanies = getProductionCompanies(movie.production_companies);
+
   return (
     <>
       <Image
@@ -77,19 +80,13 @@ export default async function MoviePage({ params }: MoviePageParams) {
           <Runtime runtime={movie.runtime} className='text-lg' />
           <CertificationBadge variant={certification} />
         </div>
-        {directors.length > 0 && (
-          <p>
-            <span className='text-sm font-medium xs:text-lg'>Direção: </span>
-            {directors.join(', ')}
-          </p>
-        )}
-        {movie.overview && (
-          <p className='max-w-xl text-balance text-foreground/90 max-xs:text-sm'>
-            {movie.overview}
-          </p>
-        )}
+        <p>
+          <span className='text-sm font-medium xs:text-lg'>Direção: </span>
+          {!directors || directors?.length === 0 ? '-' : directors.join(', ')}
+        </p>
+        <Overview overview={movie.overview} />
       </section>
-      <section className='space-y-4 px-4 pb-6 pt-10 md:px-20'>
+      <section className='flex flex-col gap-4 px-4 md:px-20'>
         {movie.belongs_to_collection && (
           <CollectionCarouselError>
             <CollectionCarousel
@@ -100,6 +97,13 @@ export default async function MoviePage({ params }: MoviePageParams) {
         )}
         <CastAndCrewCarousel persons={cast} title='Elenco' />
         <CastAndCrewCarousel persons={crew} title='Equipe' />
+      </section>
+      <section className='flex flex-col gap-6 px-4 md:px-20'>
+        <h2 className='text-lg font-medium'>Informações extras</h2>
+        <div className='flex flex-wrap items-start gap-8 align-top'>
+          <CompaniesList companies={productionCompanies} />
+          <FinacialResults budget={movie.budget} revenue={movie.revenue} />
+        </div>
       </section>
     </>
   );

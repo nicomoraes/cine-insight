@@ -1,4 +1,5 @@
 import { BrazilCertification } from '@/types/certification';
+import { Creator } from '@/types/tv-show';
 import { AggregateCreditsRoot } from '@/types/tv-show/aggregate-credits';
 import { AppendedContentRatingsRoot } from '@/types/tv-show/append';
 
@@ -31,4 +32,8 @@ export function getBrazilianTvShowCertification(
     if (certification.includes(substring)) return substring as BrazilCertification;
   }
   return null;
+}
+
+export function getCreatorsName(creators: Creator[]) {
+  return creators.map((cr) => cr.name);
 }

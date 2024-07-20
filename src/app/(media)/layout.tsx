@@ -9,7 +9,7 @@ export default async function MediaLayout({
     <>
       <TopNav />
       <BackToTopButton />
-      <main className='relative min-h-svh w-full'>{children}</main>;
+      <main className='relative flex min-h-svh w-full flex-col gap-6'>{children}</main>;
     </>
   );
 }

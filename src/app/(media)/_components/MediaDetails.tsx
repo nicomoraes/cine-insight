@@ -53,3 +53,13 @@ export function NumberOfSeasons({ numberOfSeasons, ...props }: NumberOfSeasonsPr
     </span>
   );
 }
+
+type OverviewProps = {
+  overview: string | null;
+};
+
+export function Overview({ overview }: OverviewProps) {
+  return overview ? (
+    <p className='max-w-3xl text-balance text-foreground max-xs:text-sm'>{overview}</p>
+  ) : null;
+}

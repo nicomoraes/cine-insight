@@ -17,5 +17,5 @@ export function handlePossibleNotFoundError(error: unknown) {
   if (error instanceof TmdbResponseError) {
     if (notFoundErrorCodes.includes(error.response.status_code)) return notFound();
   }
-  throw new Error('Opa, algo de errado aconteceu');
+  throw new Error('Opa, algo de errado aconteceu!');
 }

@@ -3,14 +3,24 @@ import { redirect } from 'next/navigation';
 
 import { generateTvShowDetailsPromise, getTvShowById } from '@/data/tv';
 
-import { getGenresList } from '@/lib/getters';
-import { formatTvShowCredits, getBrazilianTvShowCertification } from '@/lib/tv-show';
+import { getGenresList, getProductionCompanies } from '@/lib/getters';
+import {
+  formatTvShowCredits,
+  getBrazilianTvShowCertification,
+  getCreatorsName,
+} from '@/lib/tv-show';
 
 import Image from '@/components/common/Image';
 
 import { CastAndCrewCarousel } from '../../_components/CastAndCrewCarousel';
 import { CertificationBadge } from '../../_components/CertificationBadge';
-import { NumberOfSeasons, Rating, ReleaseYear } from '../../_components/MediaDetails';
+import { CompaniesList } from '../../_components/ExtraDetails';
+import {
+  NumberOfSeasons,
+  Overview,
+  Rating,
+  ReleaseYear,
+} from '../../_components/MediaDetails';
 import SeasonTable from '../../_components/SeasonTable';
 import { WatchProviders } from '../../_components/WatchProviders';
 
@@ -44,6 +54,10 @@ export default async function TvShowPage({ params }: TvShowPageParams) {
 
   const contentRating = getBrazilianTvShowCertification(tvShow.content_ratings);
 
+  const creators = getCreatorsName(tvShow.created_by);
+
+  const productionCompanies = getProductionCompanies(tvShow.production_companies);
+
   return (
     <>
       <Image
@@ -52,6 +66,7 @@ export default async function TvShowPage({ params }: TvShowPageParams) {
         src={`${process.env.NEXT_PUBLIC_TMDB_API_BASE_IMAGE_URL}/original/${tvShow.backdrop_path}`}
         className='media-bg-image-gradient -z-10 max-h-svh w-full object-cover brightness-[.4] max-xs:hidden'
         fill
+        loading='eager'
       />
       <Image
         alt={`Poster do filme ${tvShow.name || tvShow.original_name}`}
@@ -59,6 +74,7 @@ export default async function TvShowPage({ params }: TvShowPageParams) {
         src={`${process.env.NEXT_PUBLIC_TMDB_API_BASE_IMAGE_URL}/original/${tvShow.poster_path}`}
         className='media-bg-image-gradient -z-10 aspect-[2/3] max-h-svh object-cover brightness-50 xs:hidden'
         fill
+        loading='eager'
       />
       <section className='flex flex-col gap-4 px-4 pt-20 sm:px-10 md:px-20'>
         <WatchProviders providers={watchProviders} />
@@ -74,25 +90,25 @@ export default async function TvShowPage({ params }: TvShowPageParams) {
           />
           <CertificationBadge variant={contentRating} />
         </div>
-        {tvShow.created_by.length > 0 && (
-          <p>
-            <span className='text-sm font-medium xs:text-lg'>Criado por: </span>
-            {tvShow.created_by.map((cr) => cr.name).join(', ')}
-          </p>
-        )}
-        {tvShow.overview && (
-          <p className='max-w-xl text-balance text-foreground/90 max-xs:text-sm'>
-            {tvShow.overview}
-          </p>
-        )}
+        <p>
+          <span className='text-sm font-medium xs:text-lg'>Criado por: </span>
+          {!creators || creators?.length === 0 ? '-' : creators.join(', ')}
+        </p>
+        <Overview overview={tvShow.overview} />
       </section>
-      <section className='space-y-4 px-4 pb-6 pt-10 sm:px-10 md:px-20'>
+      <section className='flex flex-col gap-4 px-4 md:px-20'>
         <SeasonTable
           seasons={tvShow.seasons.filter((s) => s.name !== 'Especiais')}
           tvShowId={tvShow.id}
         />
         <CastAndCrewCarousel persons={credits.cast} title='Elenco' />
         <CastAndCrewCarousel persons={credits.crew} title='Equipe' />
+      </section>
+      <section className='flex flex-col gap-4 px-4 md:px-20'>
+        <h2 className='text-lg font-medium'>Informações extras</h2>
+        <div className='flex flex-wrap items-start gap-8 align-top'>
+          <CompaniesList companies={productionCompanies} />
+        </div>
       </section>
     </>
   );

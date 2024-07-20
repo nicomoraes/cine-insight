@@ -48,11 +48,11 @@ export default function SeasonTable({ tvShowId, seasons }: SeasonTableProps) {
     return (
       <Alert
         variant={'destructive'}
-        className='w-max bg-destructive text-destructive-foreground'
+        className='w-full bg-destructive text-destructive-foreground sm:w-max'
       >
         <SmileySad size={24} className='shrink-0 fill-destructive-foreground' />
         <AlertTitle>Erro ao carregar temporadas</AlertTitle>
-        <AlertDescription>
+        <AlertDescription className='text-wrap'>
           Desculpe, houve um problema ao carregar as temporadas.
         </AlertDescription>
       </Alert>
@@ -91,7 +91,7 @@ export default function SeasonTable({ tvShowId, seasons }: SeasonTableProps) {
           <Table className='bg-background'>
             <TableHeader>
               <TableRow className='w-full whitespace-nowrap'>
-                <TableHead>Nº do epsódio</TableHead>
+                <TableHead>Nº do episódio</TableHead>
                 <TableHead>Título</TableHead>
                 <TableHead>Avaliação</TableHead>
                 <TableHead>Duração</TableHead>
@@ -128,8 +128,7 @@ export default function SeasonTable({ tvShowId, seasons }: SeasonTableProps) {
                     colSpan={6}
                     className='h-24 bg-info text-center text-info-foreground'
                   >
-                    Não há informações sobre os episódios da temporada temporada
-                    selecionada.
+                    Não há informações sobre os episódios da temporada selecionada.
                   </TableCell>
                 </TableRow>
               )}
