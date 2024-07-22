@@ -142,15 +142,16 @@ export default function SeasonTable({ tvShowId, seasons }: SeasonTableProps) {
 
 function TableSkeleton() {
   return (
-    <div className='rounded-md border'>
-      <Table>
+    <div className='w-full overflow-hidden rounded-md border'>
+      <Table className='bg-background'>
         <TableHeader>
-          <TableRow className='h-[61px] w-full'>
-            <TableHead>Nº do epsódio</TableHead>
+          <TableRow className='whitespace-nowrap bg-background'>
+            <TableHead>Nº do episódio</TableHead>
             <TableHead>Título</TableHead>
             <TableHead>Avaliação</TableHead>
             <TableHead>Duração</TableHead>
             <TableHead>Data de lançamento</TableHead>
+            <TableHead>Direção</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -159,19 +160,22 @@ function TableSkeleton() {
             .map(() => (
               <TableRow key={generateRandonKey({})}>
                 <TableCell>
-                  <Skeleton className='h-4 w-[179px]' />
+                  <Skeleton className='h-4 w-[170px]' />
                 </TableCell>
                 <TableCell>
-                  <Skeleton className='h-4 w-[337px]' />
+                  <Skeleton className='h-4 w-[300px]' />
                 </TableCell>
                 <TableCell>
-                  <Skeleton className='h-4 w-[218px]' />
+                  <Skeleton className='h-4 w-[150px]' />
                 </TableCell>
                 <TableCell>
-                  <Skeleton className='h-4 w-[234px]' />
+                  <Skeleton className='h-4 w-[123px]' />
                 </TableCell>
                 <TableCell>
-                  <Skeleton className='h-4 w-[210px]' />
+                  <Skeleton className='h-4 w-[150px]' />
+                </TableCell>
+                <TableCell>
+                  <Skeleton className='h-4 w-[231px]' />
                 </TableCell>
               </TableRow>
             ))}
@@ -189,22 +193,13 @@ export function SeasonTableSkeleton() {
       <div className='overflow-hidden rounded-md border'>
         <Table className='bg-background'>
           <TableHeader>
-            <TableRow className='h-[61px] w-full bg-background'>
-              <TableHead>
-                <Skeleton className='h-4 w-[179px]' />
-              </TableHead>
-              <TableHead>
-                <Skeleton className='h-4 w-[337px]' />
-              </TableHead>
-              <TableHead>
-                <Skeleton className='h-4 w-[218px]' />
-              </TableHead>
-              <TableHead>
-                <Skeleton className='h-4 w-[234px]' />
-              </TableHead>
-              <TableHead>
-                <Skeleton className='h-4 w-[210px]' />
-              </TableHead>
+            <TableRow className='w-full whitespace-nowrap bg-background'>
+              <TableHead>Nº do episódio</TableHead>
+              <TableHead>Título</TableHead>
+              <TableHead>Avaliação</TableHead>
+              <TableHead>Duração</TableHead>
+              <TableHead>Data de lançamento</TableHead>
+              <TableHead>Direção</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -213,19 +208,22 @@ export function SeasonTableSkeleton() {
               .map(() => (
                 <TableRow key={generateRandonKey({})}>
                   <TableCell>
-                    <Skeleton className='h-4 w-[179px]' />
+                    <Skeleton className='h-4 w-[170px]' />
                   </TableCell>
                   <TableCell>
-                    <Skeleton className='h-4 w-[337px]' />
+                    <Skeleton className='h-4 w-[300px]' />
                   </TableCell>
                   <TableCell>
-                    <Skeleton className='h-4 w-[218px]' />
+                    <Skeleton className='h-4 w-[150px]' />
                   </TableCell>
                   <TableCell>
-                    <Skeleton className='h-4 w-[234px]' />
+                    <Skeleton className='h-4 w-[123px]' />
                   </TableCell>
                   <TableCell>
-                    <Skeleton className='h-4 w-[210px]' />
+                    <Skeleton className='h-4 w-[150px]' />
+                  </TableCell>
+                  <TableCell>
+                    <Skeleton className='h-4 w-[231px]' />
                   </TableCell>
                 </TableRow>
               ))}
