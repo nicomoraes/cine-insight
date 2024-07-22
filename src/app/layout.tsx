@@ -5,6 +5,7 @@ import type { Metadata } from 'next';
 import { satoshi } from '@/lib/fonts';
 
 import { Providers } from '@/components/Providers';
+import { Footer } from '@/components/common/Footer';
 import { TailwindIndicator } from '@/components/common/TailwindIndicator';
 
 export const metadata: Metadata = {
@@ -50,6 +51,7 @@ export default function RootLayout({
       <body className={`${satoshi.variable}`}>
         <Providers>
           {children}
+          <Footer />
           <TailwindIndicator />
         </Providers>
       </body>
